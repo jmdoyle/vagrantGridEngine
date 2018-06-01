@@ -58,6 +58,7 @@ yum install -y numactl
 
 # install cgroups (use when UGE version >= 8.1.7p5 is going to be installed)
 yum install -y libcgroup
+yum install -y libcgroup-tools
 # make it persistent
 chkconfig --level 3 cgconfig on
 # enable it
@@ -75,12 +76,13 @@ echo "::1       localhost localhost.localdomain localhost6 localhost6.localdomai
 groupadd docker
 usermod -aG docker vagrant
 
-#Later docker packages on redhat break UGE Docker implementation
-yum install -y docker-1.10.3-44.el7.centos
-
-#echo "DOCKER_STORAGE_OPTIONS=--storage-opt dm.no_warn_on_loop_devices=true" > /etc/sysconfig/docker-storage
-
-service docker start
+rpm --import "https://sks-keyservers.net/pks/lookup?op=get&search=0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e"
+yum install -y yum-utils
+yum-config-manager --add-repo https://packages.docker.com/1.13/yum/repo/main/centos/7
+yum makecache fast
+yum install -y docker-engine
+systemctl start docker
+chkconfig docker on
 
 # NFS
 mkdir /nfs

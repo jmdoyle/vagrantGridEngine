@@ -30,10 +30,7 @@ cd /vagrant/UGE
 # setting a symlink to a specific version I want
 # to install.
 
-#VERSION="8.1.5-demo"
-#VERSION="8.3.1p6-demo"
-#VERSION="8.3.1p7"
-VERSION="8.4.0-demo"
+VERSION="8.5.4-demo"
 
 if [ -f ../ge-$VERSION-bin-lx-amd64.tar.gz ]; then
    tar zxvpf ../ge-$VERSION-bin-lx-amd64.tar.gz
@@ -69,8 +66,8 @@ yum install -y gcc
 
 # EPEL package support installation
 cd 
-wget http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
-rpm -ivh epel-release-7-8.noarch.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+rpm -ivh epel-release-latest-7.noarch.rpm
 
 # GOLANG support 
 yum install -y golang
