@@ -9,9 +9,9 @@ Here are the prerequisites:
 - Having free VirtualBox installed
 - Having free Vagrant installed
 - Having git version management installed (or alternative you can copy the files from my github account manually)
-- Having free Grid Engine tar.gz packages (I assume here ge-8.1.5-demo-common.tar.gz and ge-8.1.5-demo-bin-lx-amd64.tar.gz which you can get for free here: http://www.univa.com/resources/univa-grid-engine-trial.php / it also works with Univa Grid Engine 8.2)
+- Having free Grid Engine tar.gz packages (I assume here ge-8.5.4-demo-common.tar.gz and ge-8.5.4-demo-bin-lx-amd64.tar.gz which you can get for free here: <http://www.univa.com/resources/univa-grid-engine-trial.php>. Update VERSION in installation.sh if you use another version)
 
-Once you have all the files in a own directory (including the ge-8.1.5... packages!)
+Once you have all the files in a own directory (including the ge-8.5.4... packages!)
 just run:
 
     vagrant up
@@ -46,7 +46,7 @@ This just sleeps for 60s on the execution host. Check that it is running:
 
 The state will initially be 'qw' but become 'r' after a few seconds.
 
-It will output two files to your home directory:
+It will output two files to your home directory (the number is the job id):
 
 - Sleeper.e3
 - Sleeper.o3
@@ -59,15 +59,4 @@ This will download the golang:latest image on one of the hosts. Test this docker
 
     qsub -b y -l docker,docker_images="*golang:latest*" -wd /nfs -xdv /nfs:/nfs,/etc:/etc -S /bin/sh /bin/sleep 123
 
-I found that occasionally this would fail for a number of reasons and return the job to the qw state. Can find out the error message by:
-
-    qstat -j <job id>
-
-Errors such as:
-
-- Docker daemon responded error: 500 - Internal Server Error: ""
-- failed creating the tmpdir "/tmp/2.1.all.q"!
-
-A 'fix' is to clear the errors and let it try again:
-
-    qmod -c all.q
+You can manually log on and download the image to each host. UGE will only allocate the above job to those hosts that have the image.
